@@ -6,7 +6,7 @@
 // <tipo de retorno> <nome> (<argumentos...>) { <escopo>}
 
 
-void PrintTest(int x){ // Se adicionar o & a varíavel é alterada dentro do main, caso não continua a mesma coisa.
+void PrintTest(int x){ // Se adicionar o & a varï¿½avel ï¿½ alterada dentro do main, caso nï¿½o continua a mesma coisa.
 	std::cout << x << " Teste!\n";
 }
 
@@ -49,7 +49,7 @@ private:
 };
 int main() { 
 	
-	// print usando C++, cout - abreviação de console output
+	// print usando C++, cout - abreviaï¿½ï¿½o de console output
 	// std::cout << "Hellow World!\n";]
 	int myArray[10];
 	int x = 10;
