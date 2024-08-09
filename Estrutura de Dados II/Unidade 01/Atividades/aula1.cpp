@@ -18,14 +18,18 @@ int main(){
         scanf("%f", &Valor);
         //freq[Valor]++;
         // Processamento de dados
-        if (Qtd==1){
-        	Maior = Valor;
-        	Menor = Valor;
-		}
-        else if (Valor > Maior)
+        
+        
+        
+        
+        if (Qtd==1 or Valor > Maior)
             Maior = Valor;
-        else if(Valor < Menor)
+        else if(Qtd == 1 or Valor < Menor)
             Menor = Valor;
+            
+            
+            
+            
         printf("\n Deseja informar o próximo valor? 1/Sim - 2/Não ");
         scanf("%i", &resposta);
     } while(resposta == 1);
