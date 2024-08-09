@@ -20,11 +20,14 @@ int main(){
         // Processamento de dados
         
         
-        
-        
-        if (Qtd==1 or Valor > Maior)
+        if(Qtd ==1){
+        	Maior = Valor;
+        	Menor = Valor;
+		}
+		
+        else if (Valor > Maior)
             Maior = Valor;
-        else if(Qtd == 1 or Valor < Menor)
+        else if(Valor < Menor)
             Menor = Valor;
             
             
