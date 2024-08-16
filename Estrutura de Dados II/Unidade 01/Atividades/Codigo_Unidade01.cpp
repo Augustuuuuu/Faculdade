@@ -1,58 +1,98 @@
 #include <stdio.h>
 #include <locale.h>
-// Escreva um algortimo que solicite ao usuÃ¡rio N valores nÃºmericos e ao final apresente:
-// VersÃ£o01: O maior e o menor
-// VersÃ£o02: As medidas de tendencia central Media, Moda e Mediana.
-// VersÃ£o03: Implementar Nome, Idade, Sexo e TrÃªs notas dos alunos
+#include <string.h>
+// Versão01: Medir a maior e menor idade, e calcular a média das idades dos alunos
+// Versão02: As medidas de tendencia central Moda e Mediana.
+// Versão03: Solicitar ao usuário, alem das idades:
+// O nome do aluno
+// Sexo (M/F)
+// As tres notas do aluno
+// Ao final apresentar:
+// Percentual de Alunos e Alunas aprovadas e reprovadas
+// Percentuaç de Alunos aprovados/reprovados com mais de 20
+// Relatório com os nomes e medias dos alunos aprovado e reprovados
+// Configurar a media de aprovacao na faculdade e quantidade de provas
+// Tratar entrada de dados nao permitido
+// Genero diferente de M e F (tanto faz maisc e minusc)
+// Idade <16 e nem > 100 anos (não pode)
+// Nota menores que zero nem maiores que dez
+// --------------------------------------------------------------------------------------------
+
+
 
 int main(){
 	
-	setlocale(LC_ALL, "Portuguese"); // Console em PortuguÃªs
+	setlocale(LC_ALL, "Portuguese"); // Console em Português
 	    
-    float Valor, Maior, Menor, Soma, Moda, Mediana, valores[100];
-    int Qtd = 0, resposta, repeticao[100] = {0}, maior_repeticao = 0, i = 0;
+    float Maior, Menor;
+    int Idade[100], Soma = 0;
+    int Qtd = 0, resposta, sexo;
+    char nome[100], nomeVelho[100] = "", nomeNovo[100] = "";
     
     do{
-        Qtd++;
-        // Entrada de dados
-        printf("\n Informe o %i. valor: ", Qtd);
-        scanf("%f", &Valor);
-        Soma += Valor;
-        int valor_convertido = (int)Valor;
-        repeticao[valor_convertido]++;
-        // Processamento de dados
-        valores[i++] = valor_convertido;
-        
-        
-        if(Qtd ==1){
-        	Maior = Valor;
-        	Menor = Valor;
+    	do{
+        // Perguntando o nome e idade do aluno e fazendo a verificação caso a idade não seja válida
+        printf("\n Informe o nome do %i. aluno: ", Qtd +1);
+        scanf("%s", &nome);
+        printf("\n Informe a idade do %i. aluno: ", Qtd + 1);
+        scanf("%d", &Idade[Qtd]);
+        printf("\n Informe o sexo do aluno: "); scanf("%s", &sexo);
+        if(Idade[Qtd] < 16 || Idade[Qtd] > 100){
+        	printf("\nDigite uma idade válida! Entre 16 e 100\n");
 		}
-		
-        else if (Valor > Maior)
-            Maior = Valor;
-        else if(Valor < Menor)
-            Menor = Valor;
-                
-        
+    	}while(Idade[Qtd] < 16 || Idade[Qtd] > 100);
+    	// Acumulador para somar idade
+        Soma += Idade[Qtd];
 
-        printf("\n Deseja informar o prÃ³ximo valor? 1/Sim - 2/NÃ£o ");
+		// Verificando quem tem a menor idade e a maior
+        if(Qtd == 0)
+			{
+        	Maior = Idade[0]; // Inicializar com zero para economizar uso de memória
+        	Menor = Idade[0];
+        	strcpy(nomeVelho, nome); // Inicializa nomeVelho com o primeiro nome
+        	strcpy(nomeNovo, nome);
+			}
+        else if (Idade[Qtd] > Maior)
+        	{
+            Maior = Idade[Qtd];
+            strcpy(nomeVelho, nome);
+        	}
+        else if(Idade[Qtd] < Menor)
+			{
+            Menor = Idade[Qtd];
+            strcpy(nomeNovo, nome);
+    		}
+        printf("\n Deseja informar o a próxima idade? 1/Sim - 2/Não ");
         scanf("%i", &resposta);
+        Qtd ++;
     } while(resposta == 1);
-    for (int i = 0; i < Qtd; i++){
-        if (repeticao[i] > maior_repeticao){
-            maior_repeticao = repeticao[i];
-            Moda = i;
-        }
-    int meio = Qtd / 2;
-    Mediana = (Qtd % 2 == 0) ? (valores[meio - 1] + valores[meio]) / 2.0 : valores[meio];
-    }
-    // Criar um vetor para verificar quais numeros se repetem enquanto o usuÃ¡rio informa
-    // SaÃ­da de dados
-    printf("\n O maior: %0.2f", Maior);
-    printf("\n O menor: %0.2f", Menor);
-    printf("\n MÃ©dia: %0.2f", Soma / Qtd);
-    printf("\n Moda: %0.2f", Moda);
-    printf("\n Mediana: %0.2f", Mediana);
+    // Faça o algoritmo aqui
     
+    // Bubble sort para ordenar as idades
+    int i, j, temp;
+    for (i = 0; i < Qtd - 1; i++) {
+        for (j = 0; j < Qtd - i - 1; j++) {
+            if (Idade[j] > Idade[j + 1]) {
+                temp = Idade[j];
+                Idade[j] = Idade[j + 1];
+                Idade[j + 1] = temp;
+            }
+        }
+    }
+
+    // Encontrar a mediana
+    int mediana;
+    if (Qtd % 2 == 0) { // Se a amostra for par tem que pegar a media aritmetica dos numeros centrais
+        mediana = (Idade[Qtd / 2 - 1] + Idade[Qtd / 2]) / 2;
+    } else {
+        mediana = Idade[Qtd / 2]; // Se for impar elemento do centro
+    }
+
+
+    // Saída de dados
+    printf("\n O aluno mais velho se chama %s e tem %.0f anos.", nomeVelho, Maior);
+    printf("\n O aluno mais novo se chama %s e tem %.0f anos.", nomeNovo, Menor);
+    printf("\n Média de idade: %d", Soma / Qtd);
+    printf("\n Mediana das idades: %d", mediana);
+
 } 
