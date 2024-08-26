@@ -16,24 +16,29 @@
 // Genero diferente de M e F (tanto faz maisc e minusc)
 // Idade <16 e nem > 100 anos (não pode)
 // Nota menores que zero nem maiores que dez
-// --------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------
 
-
+struct Turma{
+	char nome[100];
+	int idade[100];
+	int sexo;
+	float notas[300];
+};
 
 int main(){
 	
 	setlocale(LC_ALL, "Portuguese"); // Console em Português
-	    
     float Maior, Menor;
     int Idade[100], Soma = 0;
     int Qtd = 0, resposta, sexo;
     char nome[100], nomeVelho[100] = "", nomeNovo[100] = "";
-    
+	struct Turma T = { Idade[100], nome[100]};
     do{
     	do{
         // Perguntando o nome e idade do aluno e fazendo a verificação caso a idade não seja válida
         printf("\n Informe o nome do %i. aluno: ", Qtd +1);
-        scanf("%s", &nome);
+        scanf("%s", &T.nome);
+        T.showName();
         printf("\n Informe a idade do %i. aluno: ", Qtd + 1);
         scanf("%d", &Idade[Qtd]);
         printf("\n Informe o sexo do aluno: "); scanf("%s", &sexo);
@@ -49,18 +54,18 @@ int main(){
 			{
         	Maior = Idade[0]; // Inicializar com zero para economizar uso de memória
         	Menor = Idade[0];
-        	strcpy(nomeVelho, nome); // Inicializa nomeVelho com o primeiro nome
-        	strcpy(nomeNovo, nome);
+        	strcpy(nomeVelho, T.nome); // Inicializa nomeVelho com o primeiro nome
+        	strcpy(nomeNovo, T.nome);
 			}
         else if (Idade[Qtd] > Maior)
         	{
             Maior = Idade[Qtd];
-            strcpy(nomeVelho, nome);
+            strcpy(nomeVelho, T.nome);
         	}
         else if(Idade[Qtd] < Menor)
 			{
             Menor = Idade[Qtd];
-            strcpy(nomeNovo, nome);
+            strcpy(nomeNovo, T.nome);
     		}
         printf("\n Deseja informar o a próxima idade? 1/Sim - 2/Não ");
         scanf("%i", &resposta);
