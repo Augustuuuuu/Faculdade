@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <locale.h>
 #include <string.h>
-// Versão01: Medir a maior e menor idade, e calcular a média das idades dos alunos
+// 	Medir a maior e menor idade, e calcular a média das idades dos alunos  = FEITO
 // Versão02: As medidas de tendencia central Moda e Mediana.
 // Versão03: Solicitar ao usuário, alem das idades:
-// O nome do aluno
-// Sexo (M/F)
-// As tres notas do aluno
+// O nome do aluno  = FEITO
+// Sexo (M/F) = FEITO
+// As tres notas do aluno = FEITO
 // Ao final apresentar:
 // Percentual de Alunos e Alunas aprovadas e reprovadas
 // Percentuaç de Alunos aprovados/reprovados com mais de 20
@@ -29,16 +29,16 @@ int main(){
 	
 	setlocale(LC_ALL, "Portuguese"); // Console em Português
     float Maior, Menor;
-    int Idade[100], Soma = 0;
+    int Idade[100], Soma = 0;	
+    float notas[100], SomaNotas = 0;
     int Qtd = 0, resposta, sexo;
     char nome[100], nomeVelho[100] = "", nomeNovo[100] = "";
-	struct Turma T = { Idade[100], nome[100]};
+	struct Turma T = { Idade[100], nome[100], notas[100]};
     do{
     	do{
         // Perguntando o nome e idade do aluno e fazendo a verificação caso a idade não seja válida
         printf("\n Informe o nome do %i. aluno: ", Qtd +1);
         scanf("%s", &T.nome);
-        T.showName();
         printf("\n Informe a idade do %i. aluno: ", Qtd + 1);
         scanf("%d", &Idade[Qtd]);
         printf("\n Informe o sexo do aluno: "); scanf("%s", &sexo);
@@ -67,7 +67,13 @@ int main(){
             Menor = Idade[Qtd];
             strcpy(nomeNovo, T.nome);
     		}
-        printf("\n Deseja informar o a próxima idade? 1/Sim - 2/Não ");
+    	
+    	for(int i = 0; i < 3; i++){
+    		printf("\n Digite a %d. nota: ", i); scanf("%f", &T.notas[i]);
+    		SomaNotas += T.notas[i];
+		}
+    		
+        printf("\n Deseja informar o próxima aluno? 1/Sim - 2/Não ");
         scanf("%i", &resposta);
         Qtd ++;
     } while(resposta == 1);
@@ -99,5 +105,5 @@ int main(){
     printf("\n O aluno mais novo se chama %s e tem %.0f anos.", nomeNovo, Menor);
     printf("\n Média de idade: %d", Soma / Qtd);
     printf("\n Mediana das idades: %d", mediana);
-
+	printf("\n Média das notas %.2f", SomaNotas/ 3);
 } 
