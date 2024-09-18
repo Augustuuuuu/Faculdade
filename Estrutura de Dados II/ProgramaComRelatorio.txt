@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <locale.h>
+#include <stdbool.h>
+
+struct Aluno {
+    char Nome[20];
+    char Sexo;
+    int Idade;
+    float Notas[3]; // Assumindo 3 notas por aluno
+    bool Aprovado;
+};
+
+float calcularMedia(float notas[], int qtdNotas) {
+    float soma = 0;
+    for (int i = 0; i < qtdNotas; i++) {
+        soma += notas[i];
+    }
+    return soma / qtdNotas;
+}
+
+bool verificarAprovacao(float media, float mediaAprovacao) {
+    return media >= mediaAprovacao;
+}
+
+bool validarDados(char sexo, int idade) {
+    if ((sexo != 'M' && sexo != 'F' && sexo != 'm' && sexo != 'f') ||
+        (idade < 16 || idade > 100)) {
+        return false;
+    }
+    return true;
+}
+
+int main() {
+    setlocale(LC_ALL, "Portuguese");
+
+    int qtdAlunos;
+    float mediaAprovacao;
+
+    printf("Digite o número de alunos: ");
+    scanf("%d", &qtdAlunos);
+    printf("Digite a média de aprovação: ");
+    scanf("%f", &mediaAprovacao);
+
+    struct Aluno alunos[qtdAlunos];
+
+    int aprovados = 0, reprovados = 0;
+
+    for (int i = 0; i < qtdAlunos; i++) {
+        printf("\nAluno %d\n", i + 1);
+        printf("Nome: ");
+        scanf("%s", alunos[i].Nome);
+        printf("Sexo (M/F): ");
+        scanf(" %c", &alunos[i].Sexo);
+        printf("Idade: ");
+        scanf("%d", &alunos[i].Idade);
+
+        if (!validarDados(alunos[i].Sexo, alunos[i].Idade)) {
+            printf("Dados inválidos! Tente novamente.\n");
+            i--; // Repete a entrada para o aluno atual
+            continue;
+        }
+
+        for (int j = 0; j < 3; j++) {
+            do {
+                printf("Nota %d: ", j + 1);
+                scanf("%f", &alunos[i].Notas[j]);
+                if (alunos[i].Notas[j] < 0 || alunos[i].Notas[j] > 10) {
+                    printf("Nota inválida! Insira uma nota entre 0 e 10.\n");
+                }
+            } while (alunos[i].Notas[j] < 0 || alunos[i].Notas[j] > 10);
+        }
+
+        float media = calcularMedia(alunos[i].Notas, 3);
+        alunos[i].Aprovado = verificarAprovacao(media, mediaAprovacao);
+
+        if (alunos[i].Aprovado) {
+            aprovados++;
+        } else {
+            reprovados++;
+        }
+    }
+
+    // Relatório final
+    printf("\nRelatório Final:\n");
+    printf("Percentual de aprovados: %.2f%%\n", (float)aprovados / qtdAlunos * 100);
+    printf("Percentual de reprovados: %.2f%%\n", (float)reprovados / qtdAlunos * 100);
+
+    printf("\nAlunos Aprovados:\n");
+    for (int i = 0; i < qtdAlunos; i++) {
+        if (alunos[i].Aprovado) {
+            printf("Nome: %s, Média: %.2f\n", alunos[i].Nome, calcularMedia(alunos[i].Notas, 3));
+        }
+    }
+
+    printf("\nAlunos Reprovados:\n");
+    for (int i = 0; i < qtdAlunos; i++) {
+        if (!alunos[i].Aprovado) {
+            printf("Nome: %s, Média: %.2f\n", alunos[i].Nome, calcularMedia(alunos[i].Notas, 3));
+        }
+    }
+
+    return 0;
+}
