@@ -18,7 +18,7 @@ void criarFila(struct Fila *f, int c) {
 }
 
 void inserir(struct Fila *f, int v) {
-	if(f->ultimo == f->capacidade-1)
+	if(f->ultimo == f->capacidade-1) // Faz o check pra conferir se a lista passou da capcidade
 		f->ultimo = -1;
 	f->ultimo++;
 	f->dados[f->ultimo] = v; // incrementa último e insere
@@ -27,7 +27,7 @@ void inserir(struct Fila *f, int v) {
 
 int remover(struct Fila *f) { // pega o item do começo da fila
 	int temp = f->dados[f->primeiro++]; // pega o valor e incrementa o primeiro
-	if(f->primeiro == f->capacidade)
+	if(f->primeiro == f->capacidade) // 
 		f->primeiro = 0;
 	f->nItens--;  // um item retirado
 	return temp;
@@ -43,11 +43,13 @@ int estaCheia(struct Fila *f) { // retorna verdadeiro se a fila está cheia
 
 void mostrarFila(struct Fila *f){
 	int cont, i;
+	printf("[ ");
 	for (cont=0, i= f->primeiro; cont < f->nItens; cont++){
-		printf("%.2f\t",f->dados[i++]);
+		printf("%.2f ",f->dados[i++]);
 		if (i == f->capacidade)
 			i=0;
 	}
+	printf("]");
 	printf("\n\n");
 }
 
@@ -73,6 +75,7 @@ int main () {
 					printf("\nValor do elemento a ser inserido? ");
 					scanf("%f", &valor);
 					inserir(&umaFila, valor);
+					printf("\nElemento %.1f inserido na posição %d", valor, umaFila.ultimo);
 				}
 				break;
 			case 2: // remove elemento
