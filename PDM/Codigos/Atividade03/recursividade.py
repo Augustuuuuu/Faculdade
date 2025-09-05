@@ -3,7 +3,7 @@ import time
 def fatorial(n):
     inicio = time.perf_counter()  # marca o tempo inicial
     
-    resultado = 1
+  o  resultado = 1
     passos = 0
     
     for i in range(1, n + 1):
