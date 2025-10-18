@@ -9,21 +9,57 @@
 ## **2. Como Medir a Eficiência: Contagem de Passos**
 
 * "Passos" são operações elementares executadas pelo algoritmo, como:
+
   * Atribuições de variáveis.
   * Comparações lógicas.
   * Operações aritméticas básicas.
   * Acessos à memória (leitura/escrita).
 * Vantagens da contagem de passos:
+
   * É uma medida independente do hardware específico.
   * Permite uma comparação objetiva entre algoritmos.
   * Foca no comportamento à medida que a entrada (n) cresce.
   * Ajuda a identificar gargalos e oportunidades de otimização.
+
+### **Exemplos em python:**
+
+```python-repl
+import os
+os.system('cls' if os.name == 'nt' else 'clear')
+n = 5
+for i in range(1, n+1):
+    for j in range(1, i+1):
+        print(i, j)
+```
+
+Para n = 5, temos:
+5 * 2 / 2 = 15 execuções
+Portanto, a complexidade é O(n²), mesmo sendo menos execuções que um loop duplo completo (n²).
 
 ## **3. Por que a Contagem de Passos é Melhor que Medir em "Segundos"?**
 
 * O tempo real de execução varia dependendo de fatores como hardware (processador, memória, cache), sistema operacional, e compilador.
 * A contagem de passos é uma métrica portável e comparável entre diferentes ambientes.
 * Medidas de tempo em segundos são úteis como experimentos para validar análises teóricas, desde que realizadas na mesma máquina e condições.
+
+### **Medindo o tempo de execução:**
+
+Utilizando time.time() em Python
+
+```
+import os, time
+os.system('cls' if os.name == 'nt' else 'clear')
+n = 100000
+inicio = time.time()
+soma = 0
+for i in range(n):
+    soma += i
+fim = time.time()
+print(f"Tempo de execução: {fim - inicio:.6f} s")
+print(f"Soma total = {soma}")
+```
+
+**Esta abordagem é útil para comparar algoritmos executados na mesma máquina, complementando a análise teórica com dados reais.**
 
 ## **4. Ordem de Crescimento e Notação Big-O**
 
