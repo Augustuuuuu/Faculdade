@@ -12,3 +12,4 @@ Bem-vindo ao meu repositório acadêmico! Aqui eu organizo todos os materiais de
 O conteúdo está organizado em pastas, geralmente por disciplina ou semestre, para facilitar a navegação.
 
 Sinta-se à vontade para explorar!
+==================================
